@@ -1,13 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>freeCodeCamp Cash Register</title>
+</head>
+
+<body>
+  <main>
+    <img id="fcc-logo" src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg" alt="fcc-logo" />
+    <h1>Cash Register Project</h1>
+    <div id="change-due"></div>
+    <label for="cash">Enter cash from customer:</label>
+    <input id="cash" type="number" />
+    <button id="purchase-btn">Purchase</button>
+    <div id="register">
+      <div id="price-screen">
+        <div id="inner-screen">
+          <span>Total: $3.26</span>
+        </div>
+      </div>
+      <div id="connector"></div>
+      <div id="register-main">
+        <div id="keypad">
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+          <div class="keys"></div>
+        </div>
+        <div id="screen">
+          <span><b>Change in drawer:</b></span>
+          <span id="penny">Pennies: $1.01</span>
+          <span id="nickel">Nickels: $2.05</span>
+          <span id="dime">Dimes: $3.1</span>
+          <span id="quarter">Quarters: $4.25</span>
+          <span id="one">Ones: $90</span>
+          <span id="five">Fives: $55</span>
+          <span id="ten">Tens: $20</span>
+          <span id="twenty">Twenties: $60</span>
+          <span id="hundred">Hundreds: $100</span>
+        </div>
+      </div>
+      <div id="drawer">
+        <div id="handle"></div>
+      </div>
+    </div>
+
+  </main>
+  <script src="/src/main.ts"></script>
+</body>
+
 </html>
