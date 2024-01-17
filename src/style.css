@@ -1,96 +1,151 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
+}
+
+:root {
+  --light-gray: #dfdfe2;
+  --light-blue: #99c9ff;
+  --dark-blue: #0a0a23;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--dark-blue);
+  color: var(--light-gray);
+  font-size: 16px;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  padding-top: 3rem;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#fcc-logo {
+  height: 30px;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2.5rem;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+#change-due {
+  font-size: 1.2rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
+label {
+  font-size: 1.2rem;
 }
 
-.card {
-  padding: 2em;
+input {
+  width: 200px;
+  height: 30px;
+  padding: 10px;
+  font: inherit;
+  margin-top: -10px;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+#purchase-btn {
+  width: 100px;
+  height: 30px;
+  background-color: #feac32;
+  color: #0a0a23;
+  font-size: 1.1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+#register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#price-screen {
+  width: 200px;
+  height: 50px;
+  background-color: var(--light-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#inner-screen {
+  width: 180px;
+  height: 30px;
+  background-color: black;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#connector {
+  width: 40px;
+  height: 30px;
+  background-color: var(--light-blue);
+  position: relative;
+  right: 60px;
+}
+
+#register-main {
+  width: 325px;
+  height: 250px;
+  background-color: var(--light-blue);
+  border-radius: 35px 35px 0 0;
+  padding: 20px;
+  display: flex;
+  gap: 40px;
+}
+
+#keypad {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 5px;
+}
+
+.keys {
+  width: 20px;
+  height: 20px;
+  border-radius: 10%;
+  background-color: black;
+}
+
+#screen {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  line-height: 1.35;
+  font-size: 1.1rem;
+}
+
+#drawer {
+  width: 325px;
+  height: 50px;
+  background-color: var(--light-blue);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#handle {
+  background-color: var(--dark-blue);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
