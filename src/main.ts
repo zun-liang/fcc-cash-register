@@ -4,9 +4,25 @@ const purchaseBtn = document.getElementById(
 ) as HTMLButtonElement;
 const changeDue = document.getElementById("change-due") as HTMLDivElement;
 const priceSpan = document.getElementById("price") as HTMLSpanElement;
+const screenDiv = document.getElementById("screen") as HTMLDivElement;
+
+type Currency = [string, number];
+
+// let price: number = 3.26;
+// let cid: Currency[] = [
+//   ["PENNY", 1.01],
+//   ["NICKEL", 2.05],
+//   ["DIME", 3.1],
+//   ["QUARTER", 4.25],
+//   ["ONE", 90],
+//   ["FIVE", 55],
+//   ["TEN", 20],
+//   ["TWENTY", 60],
+//   ["ONE HUNDRED", 100],
+// ];
 
 let price: number = 3.26;
-let cid = [
+let cid: Currency[] = [
   ["PENNY", 1.01],
   ["NICKEL", 2.05],
   ["DIME", 3.1],
@@ -18,40 +34,30 @@ let cid = [
   ["ONE HUNDRED", 100],
 ];
 
-const result = cid.map((change) => {
+type Result = [number, number, number];
+
+const result: Result[] = cid.map((change) => {
   switch (change[0]) {
     case "PENNY":
-      return [0.01, change[1], Math.round(change[1] / 0.01)];
+      return [0.01, change[1], parseFloat((change[1] / 0.01).toFixed(2))];
     case "NICKEL":
-      return [0.05, change[1], Math.round(change[1] / 0.05)];
+      return [0.05, change[1], parseFloat((change[1] / 0.05).toFixed(2))];
     case "DIME":
-      return [0.1, change[1], Math.round(change[1] / 0.1)];
+      return [0.1, change[1], parseFloat((change[1] / 0.1).toFixed(2))];
     case "QUARTER":
-      return [0.25, change[1], Math.round(change[1] / 0.25)];
+      return [0.25, change[1], parseFloat((change[1] / 0.25).toFixed(2))];
     case "ONE":
-      return [1, change[1], Math.round(change[1] / 1)];
+      return [1, change[1], parseFloat((change[1] / 1).toFixed(2))];
     case "FIVE":
-      return [5, change[1], Math.round(change[1] / 5)];
+      return [5, change[1], parseFloat((change[1] / 5).toFixed(2))];
     case "TEN":
-      return [10, change[1], Math.round(change[1] / 10)];
+      return [10, change[1], parseFloat((change[1] / 10).toFixed(2))];
     case "TWENTY":
-      return [20, change[1], Math.round(change[1] / 20)];
+      return [20, change[1], parseFloat((change[1] / 20).toFixed(2))];
     case "ONE HUNDRED":
-      return [100, change[1], Math.round(change[1] / 100)];
+      return [100, change[1], parseFloat((change[1] / 100).toFixed(2))];
   }
 });
-
-// const result = [
-//   [0.01, 1.01, 101],
-//   [0.05, 2.05, 41],
-//   [0.1, 3.1, 31],
-//   [0.25, 4.25, 17],
-//   [1, 90, 90],
-//   [5, 55, 11],
-//   [10, 20, 2],
-//   [20, 60, 3],
-//   [100, 100, 1],
-// ];
 
 const changeInDrawerTotal: number = parseFloat(
   result
@@ -61,11 +67,23 @@ const changeInDrawerTotal: number = parseFloat(
 );
 
 priceSpan.textContent = `Total: $${price}`;
+for (let i = 0; i < cid.length; i++) {
+  const nthChild = screenDiv
+    .querySelector(`:nth-child(${i + 2})`)
+    ?.querySelector("span");
+  if (nthChild) {
+    nthChild.innerText = String(cid[i][1]);
+  }
+}
 
-const findChange = (change: number) => {
+type ChangeResult = [string[], number[]];
+
+const findChange = (change: number): ChangeResult => {
   let remainingChange = change;
-  let changeArr = [];
-  let updatedCid = [];
+  let changeArr: string[] = [];
+  let updatedCid: number[] = [];
+  let resultArr: ChangeResult = [[], []];
+
   for (let i = result.length - 1; i >= 0; i--) {
     if (remainingChange >= result[i][0]) {
       let changeGiveOut =
@@ -80,13 +98,16 @@ const findChange = (change: number) => {
         (remainingChange - changeGiveOut).toFixed(2)
       );
       changeArr.push(`${cid[i][0]}: $${changeGiveOut}`);
-      updatedCid.unshift(
-        `${cid[i][0]}: $${parseFloat((cid[i][1] - changeGiveOut).toFixed(2))}`
-      );
+      updatedCid.unshift(parseFloat((cid[i][1] - changeGiveOut).toFixed(2)));
+    } else {
+      updatedCid.unshift(cid[i][1]);
     }
   }
-  console.log(updatedCid);
-  return changeArr;
+  if (remainingChange === 0) {
+    resultArr[0] = changeArr;
+    resultArr[1] = updatedCid;
+  }
+  return resultArr;
 };
 
 const purchase = () => {
@@ -97,19 +118,32 @@ const purchase = () => {
     changeDue.textContent = "No change due - customer paid with exact cash";
   } else {
     const changeReturn = parseFloat((cash - price).toFixed(2));
-    if (changeInDrawerTotal === changeReturn) {
-      const arr = findChange(changeReturn);
-      changeDue.innerHTML = `<span>Status: CLOSED</span>`;
-      for (let i = 0; i < arr.length; i++) {
-        changeDue.innerHTML += `<span>${arr[i]}</span>`;
-      }
-    } else if (changeInDrawerTotal < changeReturn) {
+    if (changeInDrawerTotal < changeReturn) {
       changeDue.innerHTML = `<span>Status: INSUFFICIENT_FUNDS</span>`;
     } else {
-      const arr = findChange(changeReturn);
-      changeDue.innerHTML = `<span>Status: OPEN</span>`;
-      for (let i = 0; i < arr.length; i++) {
-        changeDue.innerHTML += `<span>${arr[i]}</span>`;
+      const resultArr = findChange(changeReturn);
+      console.log(resultArr);
+      if (resultArr[0].length === 0) {
+        changeDue.innerHTML = `<span>Status: INSUFFICIENT_FUNDS</span>`;
+      } else {
+        const arr = resultArr[0];
+        const arrCid = resultArr[1];
+        changeDue.innerHTML =
+          changeInDrawerTotal === changeReturn
+            ? `<span>Status: CLOSED</span>`
+            : `<span>Status: OPEN</span>`;
+        for (let i = 0; i < arr.length; i++) {
+          changeDue.innerHTML += `<span>${arr[i]}</span>`;
+        }
+        for (let i = 0; i < arrCid.length; i++) {
+          cid[i][1] = arrCid[i];
+          const nthChild = screenDiv
+            .querySelector(`:nth-child(${i + 2})`)
+            ?.querySelector("span");
+          if (nthChild) {
+            nthChild.innerText = String(arrCid[i]);
+          }
+        }
       }
     }
   }
