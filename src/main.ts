@@ -8,19 +8,6 @@ const screenDiv = document.getElementById("screen") as HTMLDivElement;
 
 type Currency = [string, number];
 
-// let price: number = 3.26;
-// let cid: Currency[] = [
-//   ["PENNY", 1.01],
-//   ["NICKEL", 2.05],
-//   ["DIME", 3.1],
-//   ["QUARTER", 4.25],
-//   ["ONE", 90],
-//   ["FIVE", 55],
-//   ["TEN", 20],
-//   ["TWENTY", 60],
-//   ["ONE HUNDRED", 100],
-// ];
-
 let price: number = 3.26;
 let cid: Currency[] = [
   ["PENNY", 1.01],
@@ -36,7 +23,7 @@ let cid: Currency[] = [
 
 type Result = [number, number, number];
 
-const result: Result[] = cid.map((change) => {
+const result: Result[] = cid.map((change): Result => {
   switch (change[0]) {
     case "PENNY":
       return [0.01, change[1], parseFloat((change[1] / 0.01).toFixed(2))];
@@ -56,6 +43,8 @@ const result: Result[] = cid.map((change) => {
       return [20, change[1], parseFloat((change[1] / 20).toFixed(2))];
     case "ONE HUNDRED":
       return [100, change[1], parseFloat((change[1] / 100).toFixed(2))];
+    default:
+      return [0, 0, 0];
   }
 });
 
@@ -85,7 +74,7 @@ const findChange = (change: number): ChangeResult => {
   let resultArr: ChangeResult = [[], []];
 
   for (let i = result.length - 1; i >= 0; i--) {
-    if (remainingChange >= result[i][0]) {
+    if (remainingChange >= result[i][0] && result[i][1] !== 0) {
       let changeGiveOut =
         remainingChange >= result[i][1]
           ? result[i][1]
@@ -122,7 +111,6 @@ const purchase = () => {
       changeDue.innerHTML = `<span>Status: INSUFFICIENT_FUNDS</span>`;
     } else {
       const resultArr = findChange(changeReturn);
-      console.log(resultArr);
       if (resultArr[0].length === 0) {
         changeDue.innerHTML = `<span>Status: INSUFFICIENT_FUNDS</span>`;
       } else {
