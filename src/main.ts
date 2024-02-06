@@ -61,7 +61,7 @@ for (let i = 0; i < cid.length; i++) {
     .querySelector(`:nth-child(${i + 2})`)
     ?.querySelector("span");
   if (nthChild) {
-    nthChild.innerText = String(cid[i][1]);
+    nthChild.textContent = String(cid[i][1]);
   }
 }
 
@@ -129,7 +129,7 @@ const purchase = () => {
             .querySelector(`:nth-child(${i + 2})`)
             ?.querySelector("span");
           if (nthChild) {
-            nthChild.innerText = String(arrCid[i]);
+            nthChild.textContent = String(arrCid[i]);
           }
         }
       }
