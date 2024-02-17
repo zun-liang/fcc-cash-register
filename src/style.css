@@ -45,6 +45,7 @@ h1 {
 
 #change-due {
   font-size: 1.2rem;
+  text-align: center;
   display: flex;
   flex-direction: column;
 }
