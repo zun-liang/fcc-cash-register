@@ -8,7 +8,7 @@ const screenDiv = document.getElementById("screen") as HTMLDivElement;
 
 type Currency = [string, number];
 
-let price: number = 3.26;
+let price: number = 1.87;
 let cid: Currency[] = [
   ["PENNY", 1.01],
   ["NICKEL", 2.05],
@@ -23,7 +23,7 @@ let cid: Currency[] = [
 
 type Result = [number, number, number];
 
-const result: Result[] = cid.map((change): Result => {
+let result: Result[] = cid.map((change): Result => {
   switch (change[0]) {
     case "PENNY":
       return [0.01, change[1], parseFloat((change[1] / 0.01).toFixed(2))];
@@ -56,6 +56,7 @@ const changeInDrawerTotal: number = parseFloat(
 );
 
 priceSpan.textContent = `Total: $${price}`;
+
 for (let i = 0; i < cid.length; i++) {
   const nthChild = screenDiv
     .querySelector(`:nth-child(${i + 2})`)
@@ -88,6 +89,7 @@ const findChange = (change: number): ChangeResult => {
       );
       changeArr.push(`${cid[i][0]}: $${changeGiveOut}`);
       updatedCid.unshift(parseFloat((cid[i][1] - changeGiveOut).toFixed(2)));
+      result[i][1] = parseFloat((cid[i][1] - changeGiveOut).toFixed(2));
     } else {
       updatedCid.unshift(cid[i][1]);
     }
@@ -108,11 +110,11 @@ const purchase = () => {
   } else {
     const changeReturn = parseFloat((cash - price).toFixed(2));
     if (changeInDrawerTotal < changeReturn) {
-      changeDue.innerHTML = `<span>Status: INSUFFICIENT_FUNDS</span>`;
+      changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
     } else {
       const resultArr = findChange(changeReturn);
       if (resultArr[0].length === 0) {
-        changeDue.innerHTML = `<span>Status: INSUFFICIENT_FUNDS</span>`;
+        changeDue.textContent = "Status: INSUFFICIENT_FUNDS";
       } else {
         const arr = resultArr[0];
         const arrCid = resultArr[1];
