@@ -137,6 +137,7 @@ const purchase = () => {
       }
     }
   }
+  userInput.value = "";
 };
 
 purchaseBtn.addEventListener("click", purchase);
